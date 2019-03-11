@@ -1,0 +1,87 @@
+---
+# defaults file for nakahiro386.vim
+vim_dependency_packages_CentOS:
+  - git
+  - autoconf
+  - automake
+  - vim-enhanced
+  - openssl-devel
+  - ncurses-devel
+  - perl-devel
+  - python-devel
+  - python36-devel
+  - ruby-devel
+  - lua-devel
+  - luajit-devel
+  - gpm-devel
+  - perl-ExtUtils-Embed
+  # - libXmu-devel
+  # - libXpm-devel
+  # - libgnomeui-devel
+
+vim_dependency_packages_Ubuntu:
+  - git
+  - build-essential
+  - autoconf
+  - automake
+  - cproto
+  - gettext
+  - libtinfo-dev
+  - libacl1-dev
+  - libgpm-dev
+  - python3-dev
+  - lua5.3
+  - liblua5.3-dev
+  - luajit
+  - libluajit-5.1-dev
+  # - libxmu-dev
+  # - libxpm-dev
+  # - libgnomeui-dev
+
+vim_configure_command_CentOS: |
+  ./configure
+  --with-features=huge
+  --enable-multibyte
+  --enable-cscope
+  --enable-fontset
+  --enable-terminal
+  --enable-perlinterp=dynamic
+  --enable-pythoninterp=dynamic
+  --enable-python3interp=dynamic
+  --with-python3-command=/usr/bin/python3.6
+  --enable-rubyinterp=dynamic
+  --enable-luainterp=dynamic
+  --with-luajit
+  --with-lua-prefix=/usr
+  --enable-fail-if-missing
+
+vim_configure_command_with_gui_CentOS: |
+  --with-x
+  --enable-gui=auto
+  --enable-gnome-check
+  --enable-gtk2-check
+
+vim_configure_command_Ubuntu: |
+  ./configure
+  --with-features=huge
+  --enable-multibyte
+  --enable-cscope
+  --enable-fontset
+  --enable-terminal
+  --enable-python3interp=dynamic
+  --enable-luainterp=dynamic
+  --with-luajit
+  --with-lua-prefix=/usr
+  --enable-fail-if-missing
+
+vim_configure_command_with_gui_Ubuntu: |
+  --with-x
+  --enable-gui=auto
+  --enable-gnome-check
+  --enable-gtk2-check
+
+vim_git_url: "https://github.com/vim/vim.git"
+vim_force_build: false
+vim_src_dir: "/usr/local/src/vim"
+vim_version: "HEAD"
+

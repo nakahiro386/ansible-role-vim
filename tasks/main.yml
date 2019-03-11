@@ -1,0 +1,43 @@
+---
+# tasks file for nakahiro386.vim
+- block:
+  - name: set distribution variables
+    set_fact:
+      vim_dependency_packages: "{{ vars['vim_dependency_packages_' + ansible_distribution] }}"
+      vim_configure_command: "{{ vars['vim_configure_command_' + ansible_distribution] }}"
+
+  - name: Install dependency packages
+    package:
+      name: "{{ vim_dependency_packages }}"
+      state: present
+
+  - name: "git clone vim to {{ vim_src_dir }}"
+    git:
+      repo: "{{ vim_git_url }}"
+      dest: "{{ vim_src_dir }}"
+      version: "{{ vim_version }}"
+      force: yes
+    register: gitclone
+
+  - name: check need to build vim
+    set_fact:
+      need_to_build: gitclone is changed or vim_force_build
+
+  - block:
+    - name: configure vim
+      command: "{{ vim_configure_command }}"
+      args:
+        chdir: "{{ vim_src_dir }}/src"
+
+    - name: make vim
+      make:
+        chdir: "{{ vim_src_dir }}/src"
+        target: all
+
+    - name: make install vim
+      make:
+        chdir: "{{ vim_src_dir }}/src"
+        target: install
+    when: need_to_build
+
+  tags: vim
