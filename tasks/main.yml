@@ -18,6 +18,7 @@
       version: "{{ vim_version }}"
       force: yes
     register: gitclone
+    diff: no
 
   - name: check need to build vim
     set_fact:
