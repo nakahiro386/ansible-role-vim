@@ -39,6 +39,6 @@
       make:
         chdir: "{{ vim_src_dir }}/src"
         target: install
-    when: need_to_build
+    when: need_to_build |bool
 
   tags: vim
