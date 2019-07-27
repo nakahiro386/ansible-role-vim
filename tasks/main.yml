@@ -22,7 +22,7 @@
 
   - name: check need to build vim
     set_fact:
-      need_to_build: gitclone is changed or vim_force_build
+      need_to_build: "{{ gitclone is changed or vim_force_build }}"
 
   - block:
     - name: configure vim
@@ -39,6 +39,6 @@
       make:
         chdir: "{{ vim_src_dir }}/src"
         target: install
-    when: need_to_build |bool
+    when: need_to_build | bool
 
   tags: vim
